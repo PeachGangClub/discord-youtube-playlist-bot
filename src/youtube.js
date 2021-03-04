@@ -99,7 +99,7 @@ async function fetchAndParsePlaylists() {
 // チャンネル名のプレイリストにvideoIDを追加する関数
 async function addVideoToPlaylist(channel, videoId) {
   // playlistsにチャンネル名のプロパティがあり、その一番後ろの項目内の動画数が200以下の場合はそのまま動画を追加する
-  if (playlists[channel]?.slice(-1)[0].count < 3) {
+  if (playlists[channel]?.slice(-1)[0].count < 200) {
     await insertPlaylistItem(playlists[channel].slice(-1)[0].id, videoId)
     console.log(`add video to 🎵${channel} : ${videoId}`)
   } else {
