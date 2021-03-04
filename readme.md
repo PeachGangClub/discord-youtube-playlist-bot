@@ -21,6 +21,10 @@ $ npm install
 .envというファイルを作って、中身を以下のように作る
 ```
 DISCORD_BOT_TOKEN = (Discord BOT用のトークン)
+GCP_CLIENT_ID = (youtube apiを使用するのに必要)
+GCP_CLIENT_SECRET = (youtube apiを使用するのに必要)
+GCP_ACCESS_TOKEN = (youtube apiを使用するのに必要)
+GCP_REFRESH_TOKEN = (youtube apiを使用するのに必要)
 ```
 
 ## 実行する

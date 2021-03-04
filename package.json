@@ -4,7 +4,7 @@
   "description": "A Bot that creates youtube playlist from youtube url in discord messages",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node src/index.js --unhandled-rejections=strict",
     "start-watch": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "discord.js": "^12.5.1",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "googleapis": "^67.1.1"
   }
 }
