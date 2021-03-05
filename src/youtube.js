@@ -102,6 +102,7 @@ async function addVideoToPlaylist(channel, videoId) {
   if (playlists[channel]?.slice(-1)[0].count < 200) {
     await insertPlaylistItem(playlists[channel].slice(-1)[0].id, videoId)
     console.log(`add video to 🎵${channel} : ${videoId}`)
+    playlists[channel].slice(-1)[0].count++
   } else {
     // そうじゃないときはプレイリスト自体を追加する
     console.log(`try to create new playlist ${channel}`)
@@ -162,7 +163,7 @@ async function insertPlaylist(title) {
         },
       },
     })
-    console.log(`add new Playlist to 🎵${title}`)
+    console.log(`add new Playlist 🎵${title}`)
     // 🎵以外をnewTitleに代入
     const newTitle = res.data.snippet.title.slice(2)
     // playlistsにtitleをキーにしたプロパティがなければ空の配列を追加する
@@ -171,7 +172,7 @@ async function insertPlaylist(title) {
     playlists[newTitle].push({
       id: res.data.id,
       publishedAt: new Date(res.data.snippet.publishedAt),
-      count: Number(res.data.snippet.contentDetails.itemCount),
+      count: 0,
     })
     return
   } catch (e) {
@@ -192,6 +193,15 @@ async function insertPlaylist(title) {
   }
 }
 
+function getPlaylistUrls(title) {
+  if (!playlists[title]) return undefined
+  return playlists[title].reduce((acc, item) => {
+    acc.push(`https://www.youtube.com/playlist?list=${item.id}`)
+    return acc
+  }, [])
+}
+
 exports.initialize = initialize
 exports.addVideoToPlaylist = addVideoToPlaylist
 exports.addPlaylist = insertPlaylist
+exports.getPlaylistUrls = getPlaylistUrls

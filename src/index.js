@@ -36,7 +36,7 @@ discordClient.on('message', async (message) => {
   if (message.mentions.has(discordClient.user)) {
     // メッセージの中身から' '(半角スペースの場所を探して)、それよりも後ろだけ抜き出したあと、前後の要らないものを消す
     switch (message.content.slice(message.content.indexOf(' ')).trim()) {
-      case '!start':
+      case 'start':
         if (
           !subscribedChannels.some((channel) => {
             return (
@@ -62,7 +62,7 @@ discordClient.on('message', async (message) => {
           )
         }
         break
-      case '!stop':
+      case 'stop':
         subscribedChannels = subscribedChannels.filter(
           (channel) => channel.id !== message.channel.id
         )
@@ -71,6 +71,15 @@ discordClient.on('message', async (message) => {
           `unsubscribed name:${message.channel.name}, id:${message.channel.id} `
         )
         break
+      case 'list': {
+        const playlistUrls = Youtube.getPlaylistUrls(message.channel.name)
+        if (playlistUrls) {
+          message.reply(`\n${playlistUrls.join('\n')}`)
+        } else {
+          await message.react('🙅')
+        }
+        break
+      }
       default:
         await message.react('😟')
         break
@@ -104,6 +113,8 @@ discordClient.on('message', async (message) => {
         } else {
           // それ以外なら強制終了
           await message.react('⚠️')
+
+          console.log(e)
           process.exit(-1)
         }
       }
